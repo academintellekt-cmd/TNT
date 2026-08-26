@@ -1,0 +1,42 @@
+{
+  "attractionName": "tnt-01",
+  "roundDurationSeconds": 10,
+  "countdownSeconds": 3,
+  "inputArmMs": 300,
+  "resultGraceMs": 500,
+  "gameOverSeconds": 3,
+  "resultSeconds": 5,
+  "leaderboardSeconds": 5,
+  "sessionIdleTimeoutMs": 300000,
+  "controlDisplayIndex": "primary",
+  "playerDisplayIndex": "secondary",
+  "controlOrientation": "auto",
+  "kiosk": true,
+  "language": "ru",
+  "joystick": {"enabled": true, "startP1": 1, "gameP1": 2, "startP2": 3, "gameP2": 4},
+  "serial": {"enabled": true, "port": "auto", "baudRate": 115200, "commandIntervalMs": 12},
+  "audio": {
+    "enabled": true,
+    "menuPlaylistFolder": "music/menu",
+    "gamePlaylistFolder": "music/game",
+    "end": "music/end.mp3",
+    "button": "music/detonator.mp3",
+    "countdown": "music/countdown.mp3",
+    "startCountdown": "music/countdown1.mp3",
+    "musicVolume": 0.35,
+    "effectsVolume": 0.5,
+    "fadeMs": 1200
+  },
+  "strivex": {
+    "enabled": true,
+    "transport": "websocket",
+    "wsHost": "127.0.0.1",
+    "wsPort": 4200,
+    "port": "COM10",
+    "baudRate": 115200,
+    "reconnectMs": 3000,
+    "developmentMode": false,
+    "defaultDifficulty": "normal"
+  },
+  "offline": {"enabled": false, "playerNames": ["Player1", "Player2"], "leaderboardSize": 10}
+}

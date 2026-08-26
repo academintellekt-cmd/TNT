@@ -1,0 +1,8 @@
+node_modules/
+dist/
+visual-check/
+packaged-check/
+*.log
+.env
+.DS_Store
+Thumbs.db
