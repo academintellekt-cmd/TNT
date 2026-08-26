@@ -23,6 +23,17 @@ npm.cmd start
 
 Or double-click `scripts\start-dev.bat`. Build a portable EXE with `scripts\build-exe.bat`; output is placed in `dist`.
 
+## Interface test mode
+
+Double-click `scripts\start-interface-test.bat`. This mode disables StriveX and COM devices, opens both application windows and adds an operator panel to the touch window. The panel can display every screen, simulate both players, start a complete countdown/round and verify responsive layout and translations. A yellow `INTERFACE TEST` badge makes it impossible to confuse this mode with normal operation.
+
+The same mode can be started from Command Prompt:
+
+```bat
+set TNT_INTERFACE_TEST=true
+npm.cmd start
+```
+
 ## Controls
 
 The values in `config.json` are one-based button numbers:

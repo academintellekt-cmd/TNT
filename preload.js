@@ -1,6 +1,7 @@
 const {contextBridge,ipcRenderer}=require('electron');
 contextBridge.exposeInMainWorld('tnt',{
   previewPhase:process.env.TNT_PREVIEW_PHASE||'',
+  interfaceTest:/^(1|true|yes|on)$/i.test(process.env.TNT_INTERFACE_TEST||''),
   getConfig:()=>ipcRenderer.invoke('get-config'),
   publishState:s=>ipcRenderer.send('state-update',s),
   onState:cb=>ipcRenderer.on('state-update',(_e,s)=>cb(s)),
