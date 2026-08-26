@@ -4,6 +4,7 @@ visual-check/
 packaged-check/
 interface-test-check/
 packaged-interface-check/
+layout-fix-check/
 *.log
 .env
 .DS_Store

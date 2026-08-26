@@ -34,6 +34,13 @@ set TNT_INTERFACE_TEST=true
 npm.cmd start
 ```
 
+The test panel shows the active mapping:
+
+- blue player: USB start button 1, detonator button 2, keyboard `1`;
+- orange player: USB start button 3, detonator button 4, keyboard `2`.
+
+Both windows use their assigned displays in fullscreen. Use “Свернуть панель” to inspect the touch layout without the operator panel.
+
 ## Controls
 
 The values in `config.json` are one-based button numbers:

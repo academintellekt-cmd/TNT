@@ -1,6 +1,6 @@
 {
   "name": "tnt-attraction",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "author": "academintellekt-cmd",
   "description": "TNT reaction attraction for the StriveX ecosystem",
   "main": "main.js",
