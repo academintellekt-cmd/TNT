@@ -12,4 +12,6 @@ assert(app.includes("value==='finish'"),'session mode can be finished');
 assert(app.includes("reportSessionEnd('completed')"),'finish reports completed');
 assert(control.includes('lobby.css')&&control.includes('../lib/lobby-options.js')&&control.includes('lobby.js'));
 assert(player.includes('../lib/lobby-options.js'));
+assert(app.includes('function resetLobbySession(){sessionExpirePending=false'),'session reset clears pending expiry');
+assert(app.includes("else{clear();api.serial('MODE IDLE');audio?.crossfade('menu');reportSessionEnd();state.phase='lobby'"),'late expiry clears timers and LED');
 console.log('lobby wiring tests passed');
