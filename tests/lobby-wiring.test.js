@@ -15,3 +15,7 @@ assert(player.includes('../lib/lobby-options.js'));
 assert(app.includes('function resetLobbySession(){sessionExpirePending=false'),'session reset clears pending expiry');
 assert(app.includes("else{clear();api.serial('MODE IDLE');audio?.crossfade('menu');reportSessionEnd();state.phase='lobby'"),'late expiry clears timers and LED');
 console.log('lobby wiring tests passed');
+const fn=n=>{const i=app.indexOf('function '+n+'(');return app.slice(i,app.indexOf('\nfunction ',i+1)>0?app.indexOf('\nfunction ',i+1):undefined)};
+assert(fn('abort').includes('if(sessionExpirePending){reportSessionEnd();'),'quit after expiry ends the session');
+assert(fn('finish').includes('quitOpen=false'),'finish closes the quit modal');
+assert(fn('countdown').includes('quitOpen=false'),'countdown closes the quit modal');

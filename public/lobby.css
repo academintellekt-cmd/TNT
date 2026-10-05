@@ -73,3 +73,9 @@ button.lobby-row.lobby-pick{width:100%}
 body .lobby-screen.lobby-screen .language{position:absolute;top:0;right:0;left:auto;bottom:auto;flex-direction:column}
 .lobby-modal-box ol{margin:0 0 2svh;padding-left:5vw;text-align:left;font-size:2.8vw;line-height:1.35;color:#d7dbe2}
 .lobby-launch-actions{display:grid;grid-template-columns:1fr 1fr;gap:2vw;width:100%}
+/* TNT: one mode leaves room, so the duel slots get the spare height. */
+.lobby-cols{flex:0 0 auto}
+.lobby-duel{flex:1 1 auto;display:flex;flex-direction:column}
+.lobby-slots{flex:1}
+.lobby-slot{min-height:22svh}
+.lobby-hex{width:18vw;height:19.8vw}
