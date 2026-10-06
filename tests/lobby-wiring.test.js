@@ -19,3 +19,7 @@ const fn=n=>{const i=app.indexOf('function '+n+'(');return app.slice(i,app.index
 assert(fn('abort').includes('if(sessionExpirePending){reportSessionEnd();'),'quit after expiry ends the session');
 assert(fn('finish').includes('quitOpen=false'),'finish closes the quit modal');
 assert(fn('countdown').includes('quitOpen=false'),'countdown closes the quit modal');
+assert(app.includes("{if(cfg.strivex.transport!=='websocket')return`<section class=\"screen\">${brand()}<div class=\"subtitle\">${tr('waiting')}</div>"),'serial transport keeps the waiting screen');
+assert(app.indexOf("cfg.strivex.transport!=='websocket'")<app.indexOf("return TntLobby.html(lobbyView())"),'transport guard precedes the lobby render');
+assert(app.includes('data-test="lobby">Лобби</button><button data-test="prepare">'),'test panel has a lobby button');
+assert(app.includes("if(phase==='lobby'){state.lobbyPlayers=[{uid:'TEST-1',name:'TEST BLUE',avatar:'X1'},{uid:'TEST-2',name:'TEST ORANGE',avatar:'X2'}];state.lobbyMax=2}"),'lobby test screen shows two players');
