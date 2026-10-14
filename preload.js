@@ -12,5 +12,6 @@ contextBridge.exposeInMainWorld('tnt',{
   onStriveXStatus:cb=>ipcRenderer.on('strivex-status',(_e,s)=>cb(s)),
   onStriveXLog:cb=>ipcRenderer.on('strivex-log',(_e,s)=>cb(s)),
   striveXFinal:x=>ipcRenderer.send('strivex-final',x),
+  striveXLobby:x=>ipcRenderer.send('strivex-lobby',x),
   simulateStriveX:x=>ipcRenderer.send('strivex-simulate',x)
 });

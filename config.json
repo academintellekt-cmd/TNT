@@ -36,6 +36,7 @@
     "baudRate": 115200,
     "reconnectMs": 3000,
     "developmentMode": false,
+    "demoLobby": false,
     "defaultDifficulty": "normal"
   },
   "offline": {"enabled": false, "playerNames": ["Player1", "Player2"], "leaderboardSize": 10}

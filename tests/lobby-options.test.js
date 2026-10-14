@@ -1,0 +1,13 @@
+const assert=require('assert');
+const O=require('../lib/lobby-options');
+assert.deepStrictEqual(O.LOBBY_MODES,['tnt']);
+assert.deepStrictEqual(O.modeOptions('tnt'),{difficulties:['normal','hard'],durations:[]});
+assert.deepStrictEqual(O.defaultSelection('tnt'),{mode:'tnt',variant:null,difficulty:'normal',durationMinutes:null});
+const sel=O.defaultSelection('tnt');
+assert.deepStrictEqual(O.canStart(sel,[{uid:'A'}],2,false),{ok:false,reason:'needPlayers'});
+assert.deepStrictEqual(O.canStart(sel,[{uid:'A'},{uid:'B'}],2,false),{ok:true,reason:null});
+assert.deepStrictEqual(O.canStart(sel,[],2,true),{ok:true,reason:null});
+const names={modes:{tnt:'Точность детонации'},difficulties:{normal:'Нормальный',hard:'Сложный'},fixed:'Раунд 10 с'};
+assert.strictEqual(O.selectionLabel({...sel,difficulty:'hard'},names),'Точность детонации · Сложный · Раунд 10 с');
+assert.strictEqual(O.selectionLabel(sel,{...names,fixed:''}),'Точность детонации · Нормальный');
+console.log('lobby-options tests passed');
