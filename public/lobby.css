@@ -79,3 +79,9 @@ body .lobby-screen.lobby-screen .language{position:absolute;top:0;right:0;left:a
 .lobby-slots{flex:1}
 .lobby-slot{min-height:22svh}
 .lobby-hex{width:18vw;height:19.8vw}
+
+/* Lava Jump call to enter: full screen for 10 s after a successful START. */
+.lobby-enter{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;background:#1c1c1e;color:#fe7800;cursor:pointer;animation:lobby-enter-in .25s ease-out}
+.lobby-enter b{font-size:clamp(56px,11vw,140px);font-weight:800;letter-spacing:.01em}
+@keyframes lobby-enter-in{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.lobby-enter{animation:none}}
