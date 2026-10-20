@@ -25,7 +25,7 @@
     "files": ["main.js", "preload.js", "config.json", "public/**/*", "lib/**/*", "package.json"],
     "extraFiles": [{"from": "music", "to": "music"}, {"from": "installer", "to": ".", "filter": ["*.bat", "*.ps1"]}],
     "win": {"target": ["nsis"]},
-    "nsis": {"oneClick": false, "perMachine": true, "allowToChangeInstallationDirectory": true, "createDesktopShortcut": true, "createStartMenuShortcut": true, "include": "installer/installer.nsh"},
+    "nsis": {"oneClick": false, "perMachine": true, "createDesktopShortcut": true, "createStartMenuShortcut": true, "include": "installer/installer.nsh"},
     "artifactName": "TNT-Attraction-Setup-${version}.${ext}"
   }
 }
