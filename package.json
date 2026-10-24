@@ -6,7 +6,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "check": "node --test tests/*.test.js",
+    "lint": "eslint .",
+    "check": "eslint . && node --test tests/*.test.js",
     "build": "electron-builder --win nsis"
   },
   "dependencies": {
@@ -14,18 +15,51 @@
     "serialport": "^13.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "electron": "37.2.0",
-    "electron-builder": "^26.0.12"
+    "electron-builder": "^26.0.12",
+    "eslint": "^10.13.0",
+    "globals": "^17.13.0"
   },
   "build": {
     "npmRebuild": false,
     "appId": "ru.strivex.tnt",
     "productName": "TNT Attraction",
     "asar": true,
-    "files": ["main.js", "preload.js", "config.json", "public/**/*", "lib/**/*", "package.json"],
-    "extraFiles": [{"from": "music", "to": "music"}, {"from": "installer", "to": ".", "filter": ["*.bat", "*.ps1"]}],
-    "win": {"target": ["nsis"]},
-    "nsis": {"oneClick": false, "perMachine": true, "createDesktopShortcut": true, "createStartMenuShortcut": true, "include": "installer/installer.nsh"},
+    "files": [
+      "main.js",
+      "preload.js",
+      "config.json",
+      "public/**/*",
+      "lib/**/*",
+      "package.json"
+    ],
+    "extraFiles": [
+      {
+        "from": "music",
+        "to": "music"
+      },
+      {
+        "from": "installer",
+        "to": ".",
+        "filter": [
+          "*.bat",
+          "*.ps1"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "include": "installer/installer.nsh"
+    },
     "artifactName": "TNT-Attraction-Setup-${version}.${ext}"
   }
 }
