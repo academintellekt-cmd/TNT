@@ -17,4 +17,15 @@ const control=fs.readFileSync(path.join(__dirname,'..','public','control.html'),
 assert(control.includes('../lib/session-points.js'),'control page loads session-points');
 assert(app.includes('points:SessionPoints.bestPoints(gatewayUids,sessionRounds)'),'session end reports per-player points');
 assert(/scores=values\.map\(/.test(app)&&app.includes('return{winner,values,scores,'),'each round keeps a score per player');
+// XP v2 records: best per player per mode/level, keyed by bracelet.
+const key=r=>({mode_id:'tnt',level_id:r.difficulty,difficulty:r.difficulty});
+assert.deepStrictEqual(P.bestRecords(['A','B'],[{difficulty:'hard',scores:[9500,9700]},{difficulty:'hard',scores:[9600,9100]},{difficulty:'normal',scores:[8000,0]}],'tnt',key),[
+  {ic:'A',game_id:'tnt',mode_id:'tnt',level_id:'hard',difficulty:'hard',score:9600},
+  {ic:'B',game_id:'tnt',mode_id:'tnt',level_id:'hard',difficulty:'hard',score:9700},
+  {ic:'A',game_id:'tnt',mode_id:'tnt',level_id:'normal',difficulty:'normal',score:8000},
+  {ic:'B',game_id:'tnt',mode_id:'tnt',level_id:'normal',difficulty:'normal',score:0}]);
+assert.deepStrictEqual(P.bestRecords(['A',null],[{difficulty:'hard',scores:[5,7]}],'tnt',key).map(r=>r.ic),['A'],'a seat without a bracelet is left out');
+assert.deepStrictEqual(P.bestRecords(['A'],[],'tnt',key),[],'no rounds -> no records');
+assert(app.includes("records:SessionPoints.bestRecords(gatewayUids,sessionRounds,'tnt',"),'session end reports XP records');
+assert(app.includes('sessionRounds.push({...state.result,difficulty:state.difficulty})'),'each round remembers its difficulty');
 console.log('session-points tests passed');
