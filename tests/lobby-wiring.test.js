@@ -17,6 +17,12 @@ assert(app.includes("else{clear();api.serial('MODE IDLE');audio?.crossfade('menu
 assert(app.includes('enterWaitStart();showEnterCall()}'),'a started session shows the enter call');
 assert(app.includes('syncEnterCall();'),'render closes the enter call once the phase moves on');
 assert(app.includes('ENTER_CALL_MS=10000')&&app.includes('setTimeout(hideEnterCall,ENTER_CALL_MS)'),'enter call lasts 10 s');
+assert(app.includes("setLobbyOverlay({type:'profile',uid:profile,state:'loading'},30000);api.striveXLobby({type:'profile',uid:profile})"),'tapping a card asks for the profile and auto-closes');
+assert(app.includes("else if(e.type==='profile'){if(lobbyOverlay?.type==='profile'&&lobbyOverlay.uid===e.uid)"),'only the open profile is filled in');
+assert(app.indexOf('data-lobby-profile-remove')<app.indexOf("if(at('data-lobby-dismiss')&&"),'remove inside the profile window is handled before its backdrop closes it');
+const main=fs.readFileSync(path.join(root,'main.js'),'utf8');
+assert(main.includes("striveXSession.on('profile',x=>emit('strivex-event',{type:'profile',...x}))"),'main forwards gateway profiles');
+assert(main.includes("x?.type==='profile'&&typeof striveXSession.requestProfile==='function'"),'main sends profile requests');
 console.log('lobby wiring tests passed');
 const fn=n=>{const i=app.indexOf('function '+n+'(');return app.slice(i,app.indexOf('\nfunction ',i+1)>0?app.indexOf('\nfunction ',i+1):undefined)};
 assert(fn('abort').includes('if(sessionExpirePending){reportSessionEnd();'),'quit after expiry ends the session');

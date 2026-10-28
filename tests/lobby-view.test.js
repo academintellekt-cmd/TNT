@@ -51,4 +51,24 @@ assert.strictEqual(L.enterHtml('ru'),'<div class="lobby-enter" data-lobby-enter 
 assert(L.enterHtml('en').includes('Come in'),'enter call is localized');
 html=L.html(view({overlay:{type:'denied',reason:'unregistered'}}));
 assert(html.includes('Данный браслет не найден в системе. Обратитесь к администратору.'),'Lava Jump wording for an unknown wristband');
+// Lobby profile window.
+const duo=[{uid:'A',name:'Алекс',avatar:'X1'},{uid:'B',name:'Мира',avatar:'X2'}];
+html=L.html(view({players:duo}));
+assert(html.includes('data-lobby-profile="A"')&&html.includes('data-lobby-profile="B"'),'player cards open the profile');
+html=L.html(view({players:duo,overlay:{type:'profile',uid:'A',state:'loading'}}));
+assert(html.includes('Загружаем профиль')&&html.includes('Алекс')&&html.includes('data-lobby-profile-remove="A"'),'loading state keeps name and actions');
+const data={username:'Алекс',level:3,xp_in_level:120,needed_xp:500,time_started:true,remaining_seconds:2536,records:[{mode_id:'tnt',level_id:'hard',best_score:9600}],recent:[{value:9600,created_at:'2026-10-28 10:05:00'}]};
+html=L.html(view({players:duo,overlay:{type:'profile',uid:'A',state:'ready',data}}));
+assert(html.includes('Уровень 3')&&html.includes('120 / 500 XP')&&html.includes('width:24%'),'level and XP bar');
+assert(html.includes('Оплачено ещё')&&html.includes('42:16'),'remaining paid time');
+assert(html.includes('Точность детонации · Сложный')&&html.includes('9')&&html.includes('600'),'records with mode and difficulty');
+assert(html.includes('Закрыть')&&html.includes('Убрать из раунда'),'close and remove buttons');
+html=L.html(view({players:duo,overlay:{type:'profile',uid:'A',state:'ready',data:{...data,time_started:false,remaining_seconds:1800,records:[],recent:[]}}}));
+assert(html.includes('30:00')&&html.includes('время пойдёт с первой игры')&&html.includes('Рекордов пока нет')&&html.includes('Игр ещё не было'),'not-started time and empty lists');
+html=L.html(view({players:duo,overlay:{type:'profile',uid:'A',state:'error',error:'offline'}}));
+assert(html.includes('Нет связи с сервером'),'offline error');
+html=L.html(view({players:duo,overlay:{type:'profile',uid:'A',state:'error',error:'not_found'}}));
+assert(html.includes('Нет данных об игроке'),'not found error');
+html=L.html(view({players:duo,session:true,overlay:{type:'profile',uid:'A',state:'ready',data}}));
+assert(!html.includes('data-lobby-profile-remove'),'no removing a player during a paid session');
 console.log('lobby-view tests passed');
