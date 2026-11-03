@@ -9,10 +9,12 @@ const pageGlobals = {
   LobbyOptions: 'readonly',
   TntLobby: 'readonly',
   SessionPoints: 'readonly',
+  StrivexCabinet: 'readonly',
 };
 
 export default defineConfig([
-  { ignores: ['dist/', 'node_modules/', 'arduino/'] },
+  // public/vendor/ is the customer's avatar renderer, kept byte-for-byte.
+  { ignores: ['dist/', 'node_modules/', 'arduino/', 'public/vendor/'] },
   js.configs.recommended,
   { rules: { 'no-empty': ['error', { allowEmptyCatch: true }] } },
   {
