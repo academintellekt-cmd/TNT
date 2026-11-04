@@ -1,0 +1,33 @@
+@import url('./tokens.css');
+
+/* Lava Jump brand layer, after lava-jump game-modules/lightning brand/lightning.css. Loaded last.
+   Chrome only: blue/orange stay as player colours (they match the physical buttons). */
+html body { background: var(--bg) !important; color: var(--white); font-family: var(--font-body); }
+body .screen { background: var(--bg) !important; }
+body .brand { font-family: var(--font-display) !important; font-weight: 700 !important; color: var(--white) !important; letter-spacing: 0 !important; text-shadow: none !important; }
+body :is(h1,h2,h3,.result-title,.game-over,.game-name):not(:is(.lobby-screen,.cab-screen) *) { font-family: var(--font-display); font-weight: 700; letter-spacing: 0; text-shadow: none; }
+body :is(button,input,select) { font-family: var(--font-body); }
+body .subtitle { color: var(--muted); }
+
+/* In TNT .orange marks the main action (Play, Yes): it becomes the filled button, the rest are outlined. */
+body .btn { background: transparent !important; border: 2px solid #64646b !important; color: var(--white) !important; border-radius: 0 !important; font-weight: 600; letter-spacing: 0; box-shadow: none !important; }
+body :is(.btn.orange,.btn.prepare-ok,.btn.selected) { background: var(--gold) !important; border-color: var(--gold) !important; color: var(--ink) !important; }
+body :is(.btn.orange,.btn.prepare-ok,.btn.selected):hover:not(:disabled) { background: #ef780d !important; }
+body .difficulty .btn.orange:not(.selected) { background: transparent !important; border-color: #64646b !important; color: var(--white) !important; }
+
+/* Player cards keep a blue/orange edge in place of the glow. */
+body :is(.player,.score-card) { border-radius: 0 !important; background: var(--surface) !important; box-shadow: none !important; border: 1px solid var(--line) !important; }
+body :is(.player.blue,.score-card.blue) { border-top: 5px solid var(--blue) !important; }
+body :is(.player.orange,.score-card.orange) { border-top: 5px solid var(--orange) !important; }
+body :is(.modal) { border-radius: 0 !important; background: var(--surface) !important; border-color: var(--line) !important; }
+body .overlay { background: #1c1c1eeb !important; }
+
+body :is(.timer,.count,.session-timer) { font-family: var(--font-display) !important; font-weight: 700 !important; color: var(--gold) !important; text-shadow: none !important; font-variant-numeric: tabular-nums; }
+body .result-values { font-family: var(--font-display); font-weight: 700; color: var(--gold); font-variant-numeric: tabular-nums; }
+body .score { font-family: var(--font-display); font-weight: 700; font-variant-numeric: tabular-nums; }
+body .table :is(td,th) { border-bottom-color: var(--line); }
+
+body .language { background: var(--surface); border-radius: 0; }
+body :is(.lang-main,.lang-item) { background: var(--surface-2); border-color: var(--line); border-radius: 0; }
+
+body :is(button,a):focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
