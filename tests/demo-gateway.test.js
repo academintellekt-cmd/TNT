@@ -39,3 +39,17 @@ test('start() reports listening and a connected gateway',async()=>{
   await listening;assert.deepEqual((await connected)[0],{connected:true});
   assert.equal(gw.snapshot().connected,true);gw.stop();
 });
+
+test('preview reset clears a hidden running session and accepts new bracelet scans',()=>{
+  const gw=new DemoGateway();
+  gw.tap('111');gw.tap('222');gw.lobbyStart();
+  assert(gw.sessionId);assert(gw.timer);
+  gw.resetPreview();
+  assert.equal(gw.sessionId,null);assert.equal(gw.timer,null);
+  assert.equal(gw.remainingMs,0);assert.deepEqual(gw.snapshot().players,[]);
+  gw.tap('111');gw.tap('222');
+  assert.deepEqual(gw.snapshot().players.map(p=>p.uid),['DEMO-111','DEMO-222']);
+  const snapshot=gw.snapshot();snapshot.players[0].name='changed';
+  assert.equal(gw.players[0].name,'Алекс');
+  gw.stop();
+});

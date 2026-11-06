@@ -1,13 +1,16 @@
 {
   "name": "tnt-attraction",
-  "version": "2.0.2",
+  "version": "2.0.5",
   "author": "academintellekt-cmd",
   "description": "TNT reaction attraction for the StriveX ecosystem",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
+    "design": "node scripts/start-design.js",
     "lint": "eslint .",
     "check": "eslint . && node --test tests/*.test.js",
+    "check:production-ui": "electron scripts/check-production-ui.js",
+    "check:game-modes": "electron scripts/check-game-modes.js",
     "build": "electron-builder --win nsis"
   },
   "dependencies": {

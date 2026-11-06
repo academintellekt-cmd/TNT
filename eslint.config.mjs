@@ -9,6 +9,11 @@ const pageGlobals = {
   LobbyOptions: 'readonly',
   TntLobby: 'readonly',
   SessionPoints: 'readonly',
+  TntResultView: 'readonly',
+  TntFuse: 'readonly',
+  TntBagGame: 'readonly',
+  TntBagView: 'readonly',
+  TntExplosion: 'readonly',
 };
 
 export default defineConfig([

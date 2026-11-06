@@ -1,7 +1,7 @@
 const assert=require('assert');
 const O=require('../lib/lobby-options');
-assert.deepStrictEqual(O.LOBBY_MODES,['tnt']);
-assert.deepStrictEqual(O.modeOptions('tnt'),{difficulties:['normal','hard'],durations:[]});
+assert.deepStrictEqual(O.LOBBY_MODES,['tnt','bag']);
+assert.deepStrictEqual(O.modeOptions('tnt'),{difficulties:['normal','hard','fuse'],durations:[]});
 assert.deepStrictEqual(O.defaultSelection('tnt'),{mode:'tnt',variant:null,difficulty:'normal',durationMinutes:null});
 const sel=O.defaultSelection('tnt');
 assert.deepStrictEqual(O.canStart(sel,[{uid:'A'}],2,false),{ok:false,reason:'needPlayers'});
