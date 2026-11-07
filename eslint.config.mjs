@@ -9,6 +9,7 @@ const pageGlobals = {
   LobbyOptions: 'readonly',
   TntLobby: 'readonly',
   SessionPoints: 'readonly',
+  StrivexCabinet: 'readonly',
   TntResultView: 'readonly',
   TntFuse: 'readonly',
   TntBagGame: 'readonly',
@@ -17,7 +18,8 @@ const pageGlobals = {
 };
 
 export default defineConfig([
-  { ignores: ['dist/', 'node_modules/', 'arduino/'] },
+  // public/vendor/ is the customer's avatar renderer, kept byte-for-byte.
+  { ignores: ['dist/', 'node_modules/', 'arduino/', 'public/vendor/'] },
   js.configs.recommended,
   { rules: { 'no-empty': ['error', { allowEmptyCatch: true }] } },
   {
