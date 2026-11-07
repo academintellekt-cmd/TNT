@@ -1,0 +1,19 @@
+.explosion-screen { isolation: isolate; gap: 0; padding: 11vh 4vw 5vh; overflow: hidden; }
+.explosion-art { width: min(100%,1200px); flex: 1; min-height: 0; max-height: 68vh; overflow: visible; }
+.explosion-title { position: relative; margin-top: -4vh; font-size: clamp(44px,8vw,130px); color: #fff0d2; text-align: center; text-shadow: 0 4px 0 #63202c,0 0 32px #ff7d2744; animation: blast-title 2.8s both; }
+.blast-glow { transform-origin: 500px 290px; animation: blast-glow 1.5s both; }
+.blast-ring { transform-origin: 500px 290px; animation: blast-ring 1.1s both; }
+.blast-rays { transform-origin: 500px 290px; animation: blast-rays 1s both; }
+.blast-cloud { transform-origin: 500px 290px; animation: blast-cloud 2.8s both; }
+.blast-smoke { transform-box: fill-box; transform-origin: center; animation: blast-smoke 2.8s both; }
+.blast-debris { transform-origin: 500px 290px; animation: blast-debris 1.5s cubic-bezier(.12,.7,.3,1) both; }
+.explosion-title,.blast-glow,.blast-ring,.blast-rays,.blast-cloud,.blast-smoke,.blast-debris { animation-delay: var(--blast-delay); }
+@keyframes blast-cloud { 0% { opacity: 0; transform: scale(.12) rotate(-12deg); } 9% { opacity: 1; transform: scale(1.15) rotate(3deg); } 19% { transform: scale(.97); } 30%,67% { opacity: 1; transform: scale(1); } 100% { opacity: .12; transform: scale(1.16); } }
+@keyframes blast-ring { 0% { opacity: 0; transform: scale(.15); } 8% { opacity: .85; } 100% { opacity: 0; transform: scale(2.6); } }
+@keyframes blast-glow { 0% { opacity: 0; transform: scale(.2); } 15% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.2); } }
+@keyframes blast-rays { 0% { opacity: 0; transform: scale(.3); } 18% { opacity: 1; } 100% { opacity: 0; transform: scale(1.5); } }
+@keyframes blast-debris { 0% { opacity: 0; transform: translate(0,0) rotate(0); } 8% { opacity: 1; } 80% { opacity: .9; } 100% { opacity: 0; transform: translate(var(--dx),var(--dy)) rotate(var(--turn)); } }
+@keyframes blast-smoke { 0%,8% { opacity: 0; transform: scale(.3); } 30% { opacity: .45; } 100% { opacity: 0; transform: translate(var(--drift),var(--rise)) scale(2.1); } }
+@keyframes blast-title { 0% { opacity: 0; transform: translateY(15px) scale(.8); } 14% { opacity: 1; transform: translateY(0) scale(1.06); } 25%,100% { opacity: 1; transform: scale(1); } }
+@media(max-aspect-ratio:4/5) { .explosion-screen { padding-top: 15vh; padding-bottom: 15vh; } .explosion-art { width: 125%; max-width: 125%; flex: 0 1 auto; margin-top: 6vh; } .explosion-title { font-size: 12vw; margin-top: 0; } }
+@media(prefers-reduced-motion:reduce) { .blast-glow,.blast-ring,.blast-rays,.blast-debris,.blast-smoke { animation: none; opacity: 0; } .blast-cloud,.explosion-title { animation: none; opacity: 1; transform: none; } }

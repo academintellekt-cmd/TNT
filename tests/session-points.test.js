@@ -26,6 +26,6 @@ assert.deepStrictEqual(P.bestRecords(['A','B'],[{difficulty:'hard',scores:[9500,
   {ic:'B',game_id:'tnt',mode_id:'tnt',level_id:'normal',difficulty:'normal',score:0}]);
 assert.deepStrictEqual(P.bestRecords(['A',null],[{difficulty:'hard',scores:[5,7]}],'tnt',key).map(r=>r.ic),['A'],'a seat without a bracelet is left out');
 assert.deepStrictEqual(P.bestRecords(['A'],[],'tnt',key),[],'no rounds -> no records');
-assert(app.includes("records:SessionPoints.bestRecords(gatewayUids,sessionRounds,'tnt',"),'session end reports XP records');
+assert(!app.includes("records:SessionRecords.bestRecords")&&app.includes('api.striveXRound({round_id:'),'TNT XP is delivered per round instead of generic session record awards');
 assert(app.includes('sessionRounds.push({...state.result,difficulty:state.difficulty})'),'each round remembers its difficulty');
 console.log('session-points tests passed');
