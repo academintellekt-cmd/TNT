@@ -14,9 +14,9 @@ assert(control.includes('lobby.css')&&control.includes('../lib/lobby-options.js'
 assert(player.includes('../lib/lobby-options.js'));
 assert(app.includes('function resetLobbySession(){sessionExpirePending=false'),'session reset clears pending expiry');
 assert(app.includes("else{clear();api.serial('MODE IDLE');audio?.crossfade('menu');reportSessionEnd();state.phase='lobby'"),'late expiry clears timers and LED');
-assert(app.includes('enterWaitStart();showEnterCall()}'),'a started session shows the enter call');
-assert(app.includes('syncEnterCall();'),'render closes the enter call once the phase moves on');
-assert(app.includes('ENTER_CALL_MS=10000')&&app.includes('setTimeout(hideEnterCall,ENTER_CALL_MS)'),'enter call lasts 10 s');
+assert(app.includes('startLobbyRound()}'),'a started session immediately begins the round countdown');
+assert(!app.includes('TntLobby.enterHtml('),'the game does not display an enter invitation');
+assert(!app.includes("tr('press')"),'the normal interface does not ask for an extra start press');
 assert(app.includes("setLobbyOverlay({type:'profile',uid:profile,state:'loading'},CABINET_IDLE_MS);api.striveXLobby({type:'profile',uid:profile})"),'tapping a card asks for the profile and auto-closes');
 assert(app.indexOf('StrivexCabinet.click(e.target,lobbyOverlay)')<app.indexOf("const idle=at('data-lobby-idle')"),'cabinet taps are handled first');
 assert(app.includes("api.striveXLobby({type:'avatar_save',uid:r.save.uid,avatar:r.save.avatar})"),'cabinet save goes to the Gateway');
@@ -29,6 +29,7 @@ assert(main.includes("striveXSession.on('profile',x=>emit('strivex-event',{type:
 assert(main.includes("x?.type==='profile'&&typeof striveXSession.requestProfile==='function'"),'main sends profile requests');
 assert(main.includes("striveXSession.on('avatar-saved',x=>emit('strivex-event',{type:'avatar_saved',...x}))"),'main forwards avatar save answers');
 assert(main.includes("x?.type==='avatar_save'&&typeof striveXSession.saveAvatar==='function'"),'main sends avatar saves');
+
 console.log('lobby wiring tests passed');
 const fn=n=>{const i=app.indexOf('function '+n+'(');return app.slice(i,app.indexOf('\nfunction ',i+1)>0?app.indexOf('\nfunction ',i+1):undefined)};
 assert(fn('abort').includes('if(sessionExpirePending){reportSessionEnd();'),'quit after expiry ends the session');

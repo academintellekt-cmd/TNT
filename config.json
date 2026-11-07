@@ -1,6 +1,7 @@
 {
   "attractionName": "tnt-01",
   "roundDurationSeconds": 10,
+  "bagPreview": {"durationSeconds": 10, "debounceMs": 250},
   "countdownSeconds": 3,
   "inputArmMs": 300,
   "resultGraceMs": 500,

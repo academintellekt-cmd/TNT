@@ -10,6 +10,11 @@ const pageGlobals = {
   TntLobby: 'readonly',
   SessionPoints: 'readonly',
   StrivexCabinet: 'readonly',
+  TntResultView: 'readonly',
+  TntFuse: 'readonly',
+  TntBagGame: 'readonly',
+  TntBagView: 'readonly',
+  TntExplosion: 'readonly',
 };
 
 export default defineConfig([
