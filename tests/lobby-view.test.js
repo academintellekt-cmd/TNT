@@ -111,4 +111,8 @@ assert(!html.includes('data-lobby-profile-remove'),'no removing a player during 
   html=L.html(view({queue:q({state:'waiting',players:[kim]})}));
   assert(html.includes(L.strings('ru').tapHere),'waiting keeps the usual call');
 }
+{
+  const css=require('fs').readFileSync(require('path').join(__dirname,'../public/lobby.css'),'utf8');
+  assert(css.includes(':where(.control-queue button){')&&!css.includes('.control-queue :where(button)'),'strip button reset has zero specificity');
+}
 console.log('lobby-view tests passed');
