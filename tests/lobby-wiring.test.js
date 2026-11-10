@@ -39,3 +39,29 @@ assert(app.includes("{if(cfg.strivex.transport!=='websocket')return`<section cla
 assert(app.indexOf("cfg.strivex.transport!=='websocket'")<app.indexOf("return TntLobby.html(lobbyView())"),'transport guard precedes the lobby render');
 assert(app.includes('data-test="lobby">Лобби</button><button data-test="prepare">'),'test panel has a lobby button');
 assert(app.includes("if(phase==='lobby'){state.lobbyPlayers=[{uid:'TEST-1',name:'TEST BLUE',avatar:'X1'},{uid:'TEST-2',name:'TEST ORANGE',avatar:'X2'}];state.lobbyMax=2}"),'lobby test screen shows two players');
+
+// queue wiring (Task 6)
+const queueFn=n=>{const i=app.indexOf('function '+n+'(');return i<0?'':app.slice(i,app.indexOf('\nfunction ',i+1)>0?app.indexOf('\nfunction ',i+1):undefined)};
+assert(main.includes("striveXSession.on('queue',x=>{lastQueue=x;emit('strivex-event',{type:'queue',...x})})"),'main forwards queue events');
+assert(main.includes("x?.type==='queue_open'&&typeof striveXSession.queueOpen==='function'")&&main.includes("x?.type==='queue_done'&&typeof striveXSession.queueDone==='function'")&&main.includes("x?.type==='queue_cancel'&&typeof striveXSession.queueCancel==='function'"),'main sends the three queue commands');
+assert(main.includes("queue:lastQueue")&&main.includes("if(!x.connected)lastQueue=null"),'snapshot carries the last queue and drops it on disconnect');
+assert(control.includes('../lib/scan-route.js')&&control.indexOf('scan-route.js')<control.indexOf('app.js'),'scan-route is loaded before app.js');
+assert(fs.readFileSync(path.join(root,'eslint.config.mjs'),'utf8').includes("ScanRoute: 'readonly'"),'ESLint knows ScanRoute');
+assert(!/queue/i.test(player),'player page is untouched');
+assert(app.includes("'queue-open':'queue_open'")&&app.includes("'queue-done':'queue_done'")&&app.includes("'queue-cancel':'queue_cancel'"),'queue buttons map to commands');
+assert(queueFn('action').includes("QUEUE_ACTIONS[value]")&&queueFn('action').includes('api.striveXLobby({type:QUEUE_ACTIONS[value]})'),'queue buttons send their commands');
+assert(app.includes("queueHost.addEventListener('click'")&&app.includes('QUEUE_ACTIONS[b.dataset.action]'),'the strip outside the lobby sends its commands through one delegated handler');
+assert((app.match(/queueHost\.addEventListener/g)||[]).length===1,'the delegated handler is attached once');
+assert(queueFn('render').includes('queueSync()')&&queueFn('queueSync').includes('html!==queueHtml'),'the strip is touched only when its markup changed');
+assert(!queueFn('controlView').includes('queueBar'),'the strip does not live in the re-rendered screen markup');
+assert(queueFn('queueShown').includes('!quitOpen')&&queueFn('queueShown').includes('gatewaySession'),'strip is hidden under the quit-confirm modal and follows the session flag');
+assert(queueFn('queueShown').includes("queue?.state==='reserved'")&&queueFn('queueShown').includes('lobbyScreen()'),'without a session only the reserved state on the lobby screen shows');
+assert(queueFn('lobbyScreen').includes("state.phase==='lobby'||state.phase==='locked'")&&queueFn('lobbyScreen').includes("cfg.strivex.transport==='websocket'"),'locked phase with a WebSocket link is a lobby for the reserved strip');
+assert(queueFn('queueSync').includes("lobbyScreen()?''"),'the lobby draws its own strip');
+assert(queueFn('queueView').includes('queueSeen')&&queueFn('queueView').includes('gatewaySession')&&queueFn('queueView').includes("==='none'"),'join is offered only after the Gateway announced the queue on this connection');
+assert(queueFn('lobbyView').includes('queue:queueShown()?{...queueView(),note:queueNote}:null'),'the lobby receives the queue view only while the strip is shown');
+assert(app.includes("api.onStriveXStatus(s=>{strivex={...strivex,...s};if(!strivex.connected){queueSeen=false;setQueue(null)}"),'queue view is cleared when the Gateway connection drops');
+assert(queueFn('setQueue').includes('clearInterval(queueTimer)')&&queueFn('setQueue').includes('setInterval'),'one countdown interval, cleared on every queue change');
+assert(app.includes("e.type==='queue'){")&&app.includes('queueSeen=true;setQueue(e.state===\'none\'?null:e)'),'queue events update the view');
+assert(app.includes('ScanRoute.scanRoute(e,{session:gatewaySession,queue,overlayType:lobbyOverlay?.type})'),'scan goes through ScanRoute with the session flag');
+assert(app.includes('if(strivex.queue&&!queueSeen)'),'the snapshot restores the queue once');

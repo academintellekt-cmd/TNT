@@ -8,6 +8,7 @@ const pageGlobals = {
   LightningAudio: 'readonly',
   LobbyOptions: 'readonly',
   TntLobby: 'readonly',
+  ScanRoute: 'readonly',
   SessionPoints: 'readonly',
   StrivexCabinet: 'readonly',
   TntResultView: 'readonly',

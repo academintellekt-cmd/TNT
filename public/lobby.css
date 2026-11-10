@@ -129,11 +129,13 @@ body .lobby-screen.lobby-screen .language{position:absolute;top:0;right:0;left:a
 .lobby-queue.none .lobby-queue-btn{min-height:5.5svh;width:100%}
 /* Reserved: the names may wrap, so the call to tap a wristband is never clipped. */
 .lobby-queue.reserved .lobby-queue-info b{white-space:normal;overflow-wrap:anywhere}
-/* Outside the lobby (fuse / bag game, countdown, post-round screens) the strip sits above the bottom button row (quit / back, up to 90px tall on portrait), never over it. */
-.control-queue{position:absolute;left:4vw;right:4vw;bottom:calc(3vh + 104px);z-index:15;display:flex;flex-direction:column;gap:.8svh;color:var(--lb-text);font-family:'Involve','Inter','Segoe UI',Arial,sans-serif}
+/* Outside the lobby (fuse / bag game, countdown, post-round screens) the strip sits at the bottom edge: during a session these screens have no buttons or language switcher down there (the only one, the transient wait-for-start screen, is replaced within a tick). */
+.control-queue{position:absolute;left:4vw;right:4vw;bottom:3vh;z-index:15;display:flex;flex-direction:column;gap:.8svh;color:var(--lb-text);font-family:'Involve','Inter','Segoe UI',Arial,sans-serif}
 :where(.control-queue button){font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .control-queue .lobby-queue{background:linear-gradient(90deg,#4a2a10f2,#2b2016f2)}
 .control-queue .lobby-queue.none{background:none}
 .lobby-queue-note{padding:.8svh 2vw;border-radius:1.6vw;background:#2b2016;font-size:2.8vw;text-align:center}
 .lobby-queue.none:has(.lobby-queue-note){padding:1svh 2vw;border:1px solid var(--lb-orange);background:#2b2016}
 .control-queue-note{padding:1svh 2vw;border:1px solid var(--lb-orange);border-radius:2vw;background:#2b2016f2;font-size:2.8vw;text-align:center}
+/* Landscape (960x540): vw-sized type would make the strip tall; size it by height so it stays a thin band, in the lobby and outside it. */
+@media (orientation:landscape){.control-queue{left:2vw;right:2vw;bottom:1.5svh}.lobby-queue{padding:.6svh 1.5vw;gap:.5svh}.lobby-queue-info,.lobby-queue-slot,.lobby-queue-note,.control-queue-note{font-size:3svh}.lobby-queue-btn{min-height:4.5svh;font-size:3svh}}
