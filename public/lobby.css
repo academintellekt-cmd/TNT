@@ -139,3 +139,7 @@ body .lobby-screen.lobby-screen .language{position:absolute;top:0;right:0;left:a
 .control-queue-note{padding:1svh 2vw;border:1px solid var(--lb-orange);border-radius:2vw;background:#2b2016f2;font-size:2.8vw;text-align:center}
 /* Landscape (960x540): vw-sized type would make the strip tall; size it by height so it stays a thin band, in the lobby and outside it. */
 @media (orientation:landscape){.control-queue{left:2vw;right:2vw;bottom:1.5svh}.lobby-queue{padding:.6svh 1.5vw;gap:.5svh}.lobby-queue-info,.lobby-queue-slot,.lobby-queue-note,.control-queue-note{font-size:3svh}.lobby-queue-btn{min-height:4.5svh;font-size:3svh}}
+/* While the strip is shown the screens underneath keep their content above it (the id beats the per-screen paddings, incl. portrait media rules). */
+body.queue-on #app>.screen{padding-bottom:calc(var(--queue-h) + 4vh)}
+body.queue-on .table-wrap{min-height:0;overflow:hidden}
+body.queue-on .status{bottom:calc(var(--queue-h) + 4vh)}

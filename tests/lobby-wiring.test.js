@@ -41,7 +41,7 @@ assert(app.includes('data-test="lobby">Лобби</button><button data-test="pre
 assert(app.includes("if(phase==='lobby'){state.lobbyPlayers=[{uid:'TEST-1',name:'TEST BLUE',avatar:'X1'},{uid:'TEST-2',name:'TEST ORANGE',avatar:'X2'}];state.lobbyMax=2}"),'lobby test screen shows two players');
 
 // queue wiring (Task 6)
-const queueFn=n=>{const i=app.indexOf('function '+n+'(');return i<0?'':app.slice(i,app.indexOf('\nfunction ',i+1)>0?app.indexOf('\nfunction ',i+1):undefined)};
+const queueFn=n=>{const i=app.indexOf('function '+n+'(');if(i<0)throw new Error('function not found: '+n);return app.slice(i,app.indexOf('\nfunction ',i+1)>0?app.indexOf('\nfunction ',i+1):undefined)};
 assert(main.includes("striveXSession.on('queue',x=>{lastQueue=x;emit('strivex-event',{type:'queue',...x})})"),'main forwards queue events');
 assert(main.includes("x?.type==='queue_open'&&typeof striveXSession.queueOpen==='function'")&&main.includes("x?.type==='queue_done'&&typeof striveXSession.queueDone==='function'")&&main.includes("x?.type==='queue_cancel'&&typeof striveXSession.queueCancel==='function'"),'main sends the three queue commands');
 assert(main.includes("queue:lastQueue")&&main.includes("if(!x.connected)lastQueue=null"),'snapshot carries the last queue and drops it on disconnect');
@@ -65,3 +65,9 @@ assert(queueFn('setQueue').includes('clearInterval(queueTimer)')&&queueFn('setQu
 assert(app.includes("e.type==='queue'){")&&app.includes('queueSeen=true;setQueue(e.state===\'none\'?null:e)'),'queue events update the view');
 assert(app.includes('ScanRoute.scanRoute(e,{session:gatewaySession,queue,overlayType:lobbyOverlay?.type})'),'scan goes through ScanRoute with the session flag');
 assert(app.includes('if(strivex.queue&&!queueSeen)'),'the snapshot restores the queue once');
+assert(queueFn('queueSync').includes("setProperty('--queue-h'")&&queueFn('queueSync').includes('offsetHeight')&&queueFn('queueSync').includes("classList.toggle('queue-on'"),'the strip reserves its height under the screens while it is shown');
+assert(fs.readFileSync(path.join(root,'public','lobby.css'),'utf8').includes('body.queue-on #app>.screen{padding-bottom:calc(var(--queue-h) + 4vh)}'),'screens leave room for the strip');
+assert(queueFn('scanDemoBracelet').includes("if(gatewaySession){api.striveXLobby({type:'demo-tap',code});return}")&&queueFn('scanDemoBracelet').indexOf("if(gatewaySession)")<queueFn('scanDemoBracelet').indexOf('resetDemoLobby()'),'a bracelet code during a session goes to the demo queue and does not reset the preview');
+assert(app.includes("state.phase!=='lobby'&&!(gatewaySession&&state.phase!=='game'&&state.phase!=='waitStart')")&&app.includes('demoBuffer=(demoBuffer+e.key)'),'demo codes can be typed during a session except in the round-key phase');
+assert(main.includes("x?.type==='demo-tap'&&typeof striveXSession.tap==='function'){if(x.previewLobby&&striveXSession.sessionId)striveXSession.resetPreview()"),'only previewLobby taps reset the demo session');
+assert(fs.readFileSync(path.join(root,'public','lobby.css'),'utf8').includes('body.queue-on .table-wrap{min-height:0;overflow:hidden}')&&queueFn('leaderboard').includes('<div class="table-wrap">'),'the leaderboard is capped above the strip instead of running under it');
